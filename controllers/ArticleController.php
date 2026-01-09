@@ -31,6 +31,10 @@ class ArticleController
             throw new Exception("L'article demandé n'existe pas.");
         }
 
+        // Incrémentation du nombre de vues de l'article.
+        $article->incrementViews();
+        $articleManager->updateArticleViews($article);
+
         $commentManager = new CommentManager();
         $comments = $commentManager->getAllCommentsByArticleId($id);
 
@@ -57,16 +61,6 @@ class ArticleController
         $view->render("apropos");
     }
 
-    /**
-     * appel de la méthode d'incrémentation des vues et mise à jour en base de données.
-     * @param Article $article
-     * @return void
-     */
-    public function incrementArticleViews(Article $article) : void
-    {
-        $article->incrementViews();
-        $articleManager = new ArticleManager();
-        $articleManager->updateArticleViews($article);
-    }
+  
 
 }

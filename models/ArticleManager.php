@@ -94,20 +94,6 @@ class ArticleManager extends AbstractEntityManager
     }
 
     /**
-     * Incrémente le nombre de vues d'un article.
-     * @param Article $article : l'article dont on veut incrémenter les vues.
-     * @return void
-     */
-    public function incrementViews(Article $article) : void
-    {
-        $sql = "UPDATE article SET views = :views WHERE id = :id";
-        $this->db->query($sql, [
-            'views' => $article->getViews(),
-            'id' => $article->getId()
-        ]);
-    }
-
-    /**
      * Met à jour le nombre de vues d'un article.
      * @param Article $article : l'article dont on veut mettre à jour les vues.
      * @return void

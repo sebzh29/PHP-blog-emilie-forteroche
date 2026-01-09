@@ -146,4 +146,14 @@
     {
         return $this->views;
     }
+
+    /**
+     * setter pour le nombre de vues.
+     * @param int $views
+     * @return void
+     */
+    public function setViews(int $views) : void
+    {
+        $this->views = $views;
+    }
  }
