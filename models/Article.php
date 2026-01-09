@@ -11,6 +11,7 @@
     private string $content = "";
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;  
+    private int $views = 0;
 
     /**
      * Setter pour l'id de l'utilisateur. 
@@ -126,5 +127,23 @@
     public function getDateUpdate() : ?DateTime 
     {
         return $this->dateUpdate;
+    }
+
+    /**
+     * Méthode pour incrémenter le compteur de vues de l'article.
+     * @return void
+     */
+    public function incrementViews() : void
+    {
+        $this->views += 1;
+    }
+
+    /**
+     * Méthode pour récupérer le nombre de vues de l'article.
+     * @return int
+     */
+    public function getViews() : int
+    {
+        return $this->views;
     }
  }
