@@ -176,4 +176,28 @@ class AdminController {
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
     }
+
+    /**
+     *  page de monitoring.
+     * @return void
+     */
+    public function showMonitoring() : void
+    {
+        $articleManager = new ArticleManager();
+        $commentManager = new CommentManager();
+
+        $articles = $articleManager->getAllArticles();
+        $commentCounts = [];
+
+        foreach ($articles as $article) {
+            $commentCounts[$article->getId()] = $commentManager->countCommentsByArticleId($article->getId());
+        }
+
+        $view = new View("Monitoring");
+        $view->render("adminMonitoring", [
+            'articles' => $articles,
+            'commentCounts' => $commentCounts
+        ]);
+
+    }
 }
