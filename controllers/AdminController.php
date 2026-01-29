@@ -183,6 +183,10 @@ class AdminController {
      */
     public function showMonitoring() : void
     {
+        //On va trier sur le titre en ordre alphabétique
+        $sort = $_GET['sort'] ?? 'title';
+        $order = $_GET['order'] ?? 'asc';
+
         $articleManager = new ArticleManager();
         $commentManager = new CommentManager();
 
@@ -193,10 +197,47 @@ class AdminController {
             $commentCounts[$article->getId()] = $commentManager->countCommentsByArticleId($article->getId());
         }
 
+        //Tri des articles en fonction des paramètres
+        usort($articles, function($a, $b) use ($sort, $order, $commentCounts) {
+            switch ($sort) {
+                case 'title':
+                    $valueA = $a->getTitle();
+                    $valueB = $b->getTitle();
+                    break;
+                case 'views':
+                    $valueA = $a->getViews();
+                    $valueB = $b->getViews();
+                    break;
+                case 'comments':
+                    $valueA = $commentCounts[$a->getId()] ?? 0;
+                    $valueB = $commentCounts[$b->getId()] ?? 0;
+                    break;
+                case 'date':
+                    $valueA = $a->getDateCreation()->getTimeStamp();
+                    $valueB = $b->getDateCreation()->getTimeStamp();
+                    break;
+                default:
+                    $valueA = $a->getTitle();
+                    $valueB = $b->getTitle();
+            }
+
+            if ($valueA == $valueB) {
+                return 0;
+            }
+
+            if ($order === 'asc') {
+                return ($valueA < $valueB) ? -1 : 1;
+            } else {
+                return ($valueA > $valueB) ? -1 : 1;
+            }
+        });
+
         $view = new View("Monitoring");
         $view->render("adminMonitoring", [
             'articles' => $articles,
-            'commentCounts' => $commentCounts
+            'commentCounts' => $commentCounts,
+            'sort' => $sort,
+            'order' => $order
         ]);
 
     }
