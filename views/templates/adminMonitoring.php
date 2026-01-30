@@ -21,7 +21,7 @@ function sortLink(string $label, string $column, string $currentSort, string $cu
 
 ?>
 
-<h1>Monitoring du blog</h1>
+<h2>Monitoring du blog</h2>
 
 <table class="admin-table">
     <thead>
