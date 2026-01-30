@@ -373,6 +373,15 @@ a.info {
     cursor: pointer;
 }
 
+.admin-table th a {
+    color: white;
+    text-decoration: none;
+}
+
+.admin-table th a:hover {
+    text-decoration: underline;
+}
+
 /** 
  * Footer global de la page.
  */
