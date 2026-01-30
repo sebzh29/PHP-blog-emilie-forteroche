@@ -382,6 +382,24 @@ a.info {
     text-decoration: underline;
 }
 
+.admin-comment {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.btn-delete {
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #e74c3c;
+}
+
+
 /** 
  * Footer global de la page.
  */

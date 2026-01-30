@@ -29,7 +29,8 @@ function sortLink(string $label, string $column, string $currentSort, string $cu
             <th><?= sortLink("Titre", "title", $sort, $order) ?></th>
             <th><?= sortLink("Vues", "views", $sort, $order) ?></th>
             <th><?= sortLink("Commentaires", "comments", $sort, $order) ?></th>
-            <th><?= sortLink("Date de publication", "date", $sort, $order) ?></th>            
+            <th><?= sortLink("Date de publication", "date", $sort, $order) ?></th>
+            <th>Actions</th>            
         </tr>
     </thead>
     <tbody>
@@ -39,6 +40,11 @@ function sortLink(string $label, string $column, string $currentSort, string $cu
                 <td><?= $article->getViews() ?></td>
                 <td><?= $commentCounts[$article->getId()] ?></td>
                 <td><?= $article->getDateCreation()->format('d/m/Y') ?></td>
+                <td>
+                    <a href="index.php?action=adminArticle&id=<?= $article->getId() ?>">
+                        Gérer commentaires
+                    </a>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>

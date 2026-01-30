@@ -239,6 +239,60 @@ class AdminController {
             'sort' => $sort,
             'order' => $order
         ]);
+    }
 
+    /**
+     * Affiche la page d'un article en administration.
+     * @return void
+     */
+    public function showAdminArticle() : void
+    {
+        $articleId = (int) ($_GET['id'] ?? 0); 
+
+        $articleManager = new ArticleManager();
+        $commentManager = new CommentManager();
+
+        $article = $articleManager->getArticleById($articleId);
+        $comments = $commentManager->getAllCommentsByArticleId($articleId);
+
+        if (!$article) {
+            throw new Exception("L'article demandé n'existe pas.");
+        }
+
+        $view = new View("Admin - Article");
+        $view->render("adminArticle", [
+            'article' => $article,
+            'comments' => $comments
+        ]);
+    }
+
+    /**
+     * Suppression d'un commentaire.
+     * @return void
+     */
+    public function deleteComment() : void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            throw new Exception("Action non autorisée.");
+        }
+
+        $commentId = Utils::request("comment_id", -1);
+
+        if ($commentId <= 0) {
+            throw new Exception("ID de commentaire invalide.");
+        }
+
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getCommentById($commentId);
+
+        if (!$comment) {
+            throw new Exception("Le commentaire demandé n'existe pas.");
+        }
+
+        $commentManager->deleteComment($comment);
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
+     
     }
 }
